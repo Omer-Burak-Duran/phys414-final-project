@@ -9,17 +9,22 @@ import csv
 def read_csv_data():
     wd_data = open('white_dwarf_data.csv')
     reader = csv.reader(wd_data, delimiter=',')
+
     skip_header = True
     log_g_values = []
     mass_values = []
+
     for row in reader:
         if skip_header:
             skip_header = False
             continue
+
         log_g_values.append(float(row[1]))
         mass_values.append(float(row[2]))
+
     zipped_values = list(zip(mass_values, log_g_values))
     sorted_values = list(zip(*sorted(zipped_values, key=lambda x: x[0])))
+
     return sorted_values[0], sorted_values[1]
 
 # function to calculate and return the scaled radius values
@@ -27,13 +32,17 @@ def calculate_radius(mass_values, log_g_values):
     solar_mass = float(1.988 * 10**30)
     gravitational_constant = 6.67384e-11
     radius_unit_scale = 1 / (6.371 * 10**6)
+
     num_values = len(log_g_values)
     radius_values = np.zeros(num_values)
+
     for i in range(num_values):
         g_scaled = 10**(log_g_values[i] - 2)
+
         radius_values[i] = \
             (np.sqrt(gravitational_constant * solar_mass * 
                      mass_values[i] / g_scaled) * radius_unit_scale)
+        
     return radius_values
 
 
@@ -48,7 +57,7 @@ def mytests():
     radius_values = calculate_radius(mass_values, log_g_values)
 
     # plot mass vs radius
-    print("Plotting Mass vs Radius for White Dwarf Data")
+    print("Plotting Mass vs Radius for White Dwarf Data\n")
     plt.figure(figsize=(12, 8))
     plt.plot(radius_values, mass_values)
     plt.xlabel('R')
@@ -59,8 +68,10 @@ def mytests():
     plt.grid()
     plt.show()
 
+
 def main():
     mytests()
+
 
 if __name__ == '__main__':
     main()
