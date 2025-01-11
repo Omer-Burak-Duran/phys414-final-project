@@ -11,7 +11,7 @@ Every Part has its own corresponding Python file: *newton_parta.py, newton_partb
 ## Visualizations and Report:
 Any plots, graphs, illustrations, and visualizations will be saved under the folder named "**plots**"
 
-The report "**FinalProjectReport.pdf**" has explanations for the code and the mathematical computations done for this project.
+The report "**Final_Project.pdf**" has explanations for the code and the mathematical computations done for this project.
 
 To see the outputs and the plots, one can individually run any part, for example "*python newton_partc.py*".
 
