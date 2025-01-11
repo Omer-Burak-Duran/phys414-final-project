@@ -24,20 +24,23 @@ def read_csv_data():
 
 # function to calculate and return the scaled radius values
 def calculate_radius(mass_values, log_g_values):
-    solar_mass = float(1.988 * 10**(30))
+    solar_mass = float(1.988 * 10**30)
     gravitational_constant = 6.67384e-11
-    radius_unit_converter = 1/(6.371 * 10**(6))
-    radii_average_earth_radii = np.zeros(len(log_g_values))
-    for i in range(len(log_g_values)):
-        g_SI = 10**(log_g_values[i] - 2)
-        radii_average_earth_radii[i] = \
+    radius_unit_scale = 1 / (6.371 * 10**6)
+    num_values = len(log_g_values)
+    radius_values = np.zeros(num_values)
+    for i in range(num_values):
+        g_scaled = 10**(log_g_values[i] - 2)
+        radius_values[i] = \
             (np.sqrt(gravitational_constant * solar_mass * 
-                     mass_values[i] / g_SI) * radius_unit_converter)
-    return radii_average_earth_radii
+                     mass_values[i] / g_scaled) * radius_unit_scale)
+    return radius_values
 
 
 def mytests():
+
     print("Tests for Newton Part B)\n")
+    
     # read the csv data
     mass_values, log_g_values = read_csv_data()
     
@@ -58,6 +61,6 @@ def mytests():
 
 def main():
     mytests()
-    
+
 if __name__ == '__main__':
     main()
