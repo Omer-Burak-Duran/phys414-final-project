@@ -18,7 +18,7 @@ def plot_power_law_dependence(mass_values, radius_values):
     y_values = list(map(lambda x: np.log(x), mass_values))
 
     print("Plotting log M vs log R to see power-law dependence\n")
-    plt.figure(figsize=(12, 6))
+    plt.figure(figsize=(12, 8))
     plt.plot(x_values, y_values1, label=f"y = {cutoff_values[0]}")
     plt.plot(x_values, y_values2, label=f"y = {cutoff_values[1]}")
     plt.plot(x_values, y_values, label="log M values")
@@ -29,6 +29,7 @@ def plot_power_law_dependence(mass_values, radius_values):
     plt.tight_layout
     plt.grid()
     plt.show()
+
 
 # return the filtered data to contain only samples with low-mass
 def get_filtered_data(mass_values, log_g_values, radius_values, cutoff=-1.1):
@@ -49,18 +50,13 @@ def get_filtered_data(mass_values, log_g_values, radius_values, cutoff=-1.1):
 
 # calculate lane-emden with q = 3 and n = 3/2
 def calculate_lane_emden(h = 1e-4):
-    count = 1
-    previous_f = 1
-    current_f = 1
-    next_f = 1
-    result = [1, 1]
+    previous_f = 1; current_f = 1; next_f = 1
+    result = [1, 1]; count = 1
 
     while next_f > 0:
-        next_f = ((h * previous_f + 
-                   2 * count * h * current_f - 
+        next_f = ((h * previous_f + 2 * count * h * current_f - 
                    count * h * previous_f - 
-                   h**3 * count * current_f**(3 / 2)) 
-                   / (h * (count + 1)))
+                   h**3 * count * current_f**(3 / 2)) / (h * (count + 1)))
         
         result.append(next_f)
         previous_f = current_f
